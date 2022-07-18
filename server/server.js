@@ -1,6 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const connectDB = require("./db/connect");
+const path = require("path");
+const morgan = require("morgan");
+require("dotenv").config();
 
 const PORT = process.env.PORT || 3001;
 
@@ -14,6 +17,9 @@ const Game = require("./models/game");
 const { MongoRuntimeError } = require("mongodb");
 
 const app = express();
+app.use(express.static("public"));
+app.use(morgan("tiny"));
+app.use(express.json());
 
 // using app routes
 app.use("/game", gameRoutes);
@@ -24,29 +30,26 @@ app.get("/api", (req, res) => {
 });
 
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "../client/public", "index.html"));
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server listening on ${PORT}`);
+// });
 
-// const runApp = async () => {
-//   try {
-//     mongoose.connect(process.env.MONGO_URL);
+const runApp = async () => {
+  try {
+    mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
+    const db = mongoose.connection;
+    db.once("open", () => {
+      console.log(`db is opened!`);
+      app.listen(PORT, () => {
+        console.log(`node server running on port ${PORT}`);
+      });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-//     const db = mongoose.connection;
-
-//     db.once("open", () => {
-//       console.log(`db is opened!`);
-//       app.listen(PORT, () => {
-//         console.log(`node server running on port ${PORT}`);
-//       });
-//     });
-//   } 
-//   catch (error) {
-//     console.log(error)
-//   }
-// };
-
-// runApp();
+runApp();
