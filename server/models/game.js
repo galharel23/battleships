@@ -1,10 +1,11 @@
 const mongoose = require('mongoose')
-const Scheme = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const gameScheme = new Scheme({
+const gameSchema = new Schema({
    name:{
-    type: String
+    type: String,
+    required: true
    }
 })
 
-const Game = mongoose.model('Game', gameScheme);
+const Game = mongoose.model('Game', gameSchema);

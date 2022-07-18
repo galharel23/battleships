@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-const Scheme = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const userScheme = new Scheme({
+const userSchema = new Schema({
     name:{
         type: String,
         required: true
@@ -17,4 +17,4 @@ const userScheme = new Scheme({
     }
 })
 
-const User = mongoose.model('User', userScheme);
+const User = mongoose.model('User', userSchema);
