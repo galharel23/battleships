@@ -1,6 +1,14 @@
 const express = require("express");
+const mongoose = require('mongoose');
+const connectDB = require("./db/connect");
+
+// require("dotenv").config();
+
 
 const PORT = process.env.PORT || 3001;
+
+const User = require('./models/user');
+const Game = require('./models/game');
 
 const app = express();
 
