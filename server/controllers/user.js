@@ -1,19 +1,23 @@
-const express = require('express')
+const express = require("express");
 const mongoose = require("mongoose");
+const user = require("../models/user");
 const User = require("../models/user");
 
+// CREATE
 const createUser = async (req, res) => {
-    let user = new User({
-      name: req.body.name,
-    });
+  let user = new User({
+    name: req.body.name,
+  });
   try {
     const newUser = await user.save();
     res.status(201).json(newUser);
-    // res.send("create new user");
+    console.log("create new user");
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
+
+// READ
 
 const getUserById = async (req, res) => {
   let id = req.params.id;
@@ -25,27 +29,80 @@ const getUserById = async (req, res) => {
   }
 };
 
-// const setUserReady = async (req,res) =>{
-//     await User.updateOne({
-
-//     })
-// }
-
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find()
-    res.json(users)
+    const users = await User.find();
+    res.json(users);
   } catch (err) {
-    res.status(500).json({message:err.message})
+    res.status(500).json({ message: err.message });
   }
 };
 
-// const getAllActiveUsers = async (req,res) =>{
-//     User.find().where()
-// }
+const getAllActiveUsers = (req, res) => {
+  User.find({ name: "Gal" }, (err, result) => {
+    if (err) {
+      res.json({ message: err.message });
+    } else {
+      res.json(result);
+    }
+  });
+};
+
+// UPDATE
+
+const setIsUserOnline = async (req, res) => {
+  const id = req.params.id;
+  const user = await User.findById(id);
+  user.isOnline = !user.isOnline;
+  user.save((err) => {
+    if (err) {
+      res.json({ message: err.message });
+    } else {
+      res.json({ message: "Updated isOnline" });
+    }
+  });
+};
+
+const setIsUserInGame = async (req, res) => {
+  const id = req.params.id;
+  const user = await User.findById(id);
+  user.isDuringGame = true;
+  user.save((err) => {
+    if (err) {
+      res.json({ message: err.message });
+    } else {
+      res.json({ message: "Updated isOnline" });
+    }
+  });
+};
+
+const setUserGameOver = async (req, res) => {
+  const id = req.params.id;
+  const winnerId = req.params.winnerId;
+  const isWinner = id === winnerId ? true : false;
+  const user = await User.findById(id);
+  user.rank = isWinner ? user.rank + 10 : user.rank - 10;
+  user.isDuringGame = false;
+};
+
+// DELETE
+
+const deleteUser = async (req, res) => {
+  const id = req.params.id;
+  User.findByIdAndRemove(id)
+    .exec()
+    .then(() =>
+      res.status(204).json({
+        success: true,
+      })
+    );
+};
 
 module.exports = {
   createUser,
   getUserById,
   getAllUsers,
+  getAllActiveUsers,
+  setIsUserOnline,
+  deleteUser,
 };
