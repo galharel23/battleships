@@ -1,5 +1,7 @@
-const express = require("express");
 const mongoose = require("mongoose");
+const express = require("express");
+const session = require("express-session");
+const MongoDBSession = require("connect-mongodb-session")(session);
 const connectDB = require("./db/connect");
 const path = require("path");
 const morgan = require("morgan");
@@ -17,6 +19,11 @@ const Game = require("./models/game");
 const { MongoRuntimeError } = require("mongodb");
 
 const app = express();
+const store = new MongoDBSession({
+  uri: process.env.MONGO_URL,
+  collection: "users",
+});
+
 app.use(express.static("public"));
 app.use(morgan("tiny"));
 app.use(express.json());
@@ -25,7 +32,7 @@ app.use(express.json());
 app.use("/game", gameRoutes);
 app.use("/user", userRoutes);
 
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
@@ -36,6 +43,7 @@ app.get("*", (req, res) => {
 // app.listen(PORT, () => {
 //   console.log(`Server listening on ${PORT}`);
 // });
+
 
 const runApp = async () => {
   try {

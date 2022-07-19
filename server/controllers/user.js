@@ -1,13 +1,15 @@
+const express = require('express')
 const mongoose = require("mongoose");
 const User = require("../models/user");
 
 const createUser = async (req, res) => {
-  let user = new User({
-    name: req.body.name,
-  });
+    let user = new User({
+      name: req.body.name,
+    });
   try {
     const newUser = await user.save();
     res.status(201).json(newUser);
+    // res.send("create new user");
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -30,13 +32,12 @@ const getUserById = async (req, res) => {
 // }
 
 const getAllUsers = async (req, res) => {
-  User.find()
-    .then((result) => {
-      res.json(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  try {
+    const users = await User.find()
+    res.json(users)
+  } catch (err) {
+    res.status(500).json({message:err.message})
+  }
 };
 
 // const getAllActiveUsers = async (req,res) =>{

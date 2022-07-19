@@ -5,16 +5,33 @@ const userSchema = new Schema({
     name:{
         type: String,
         required: true
-    }
-    // rank:{
-    //     type: Number,
-    //     min:0,
-    //     default:100
-    // },
-    // lastConnection:{
-    //     type: Date,
-    //     default: Date.now
+    },
+    isOnline:{
+        type: Boolean,
+        default: false,
+        required:true
+    },
+    isDuringGame:{
+        type: Boolean,
+        default: false,
+        required: true
+    },
+    rank:{
+        type: Number,
+        min:0,
+        default:100,
+        required:true
+    },
+    lastConnection:{
+        type: Date,
+        default: Date.now,
+        required:true
+    },
+    // games:{
+    //     type: [Game],
+    //     default:[],
+    //     required:true
     // }
 })
 
-const User = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);
