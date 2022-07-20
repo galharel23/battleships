@@ -1,0 +1,39 @@
+###
+// Get All Users
+GET  http://localhost:3001/user/
+Content-Type: application/json
+
+###
+// Get Top(x) Users
+GET  http://localhost:3001/user/topUsers?num=4
+Content-Type: application/json
+
+###
+// Get All Active Users
+GET  http://localhost:3001/user/active/
+Content-Type: application/json
+
+###
+// Get User By Id
+GET  http://localhost:3001/user/62d691cfb7628ac35ad3f30d
+Content-Type: application/json
+
+###
+// Create New User
+POST http://localhost:3001/user/new 
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name":"Lola2"
+}
+
+###
+// UPDATE User By Id
+PATCH http://localhost:3001/user/62d691cfb7628ac35ad3f30d
+Content-Type: application/json
+
+###
+// Delete User By Id
+DELETE   http://localhost:3001/user/62d691c8b7628ac35ad3f30b
+Content-Type: application/json

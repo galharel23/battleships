@@ -20,18 +20,19 @@ const userSchema = new Schema({
         type: Number,
         min:0,
         default:100,
-        required:true
+        required:true,
     },
     lastConnection:{
         type: Date,
         default: Date.now,
         required:true
     },
-    // games:{
-    //     type: [Game],
-    //     default:[],
-    //     required:true
-    // }
+    gamesHistory:{
+        type: [Schema.Types.ObjectId],
+        ref: 'Game',
+        default:[],
+        required:true
+    }
 })
 
 module.exports = mongoose.model('User', userSchema);

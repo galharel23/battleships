@@ -1,12 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const { rawListeners } = require("../models/user");
 const user = require("../models/user");
 const User = require("../models/user");
 
 // CREATE
 const createUser = async (req, res) => {
+  const rank = req.body.rank == null ? 100 : req.body.rank;
   let user = new User({
     name: req.body.name,
+    rank: rank,
   });
   try {
     const newUser = await user.save();
@@ -38,14 +41,32 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const getAllActiveUsers = (req, res) => {
-  User.find({ name: "Gal" }, (err, result) => {
-    if (err) {
-      res.json({ message: err.message });
-    } else {
-      res.json(result);
+const getAllActiveUsers = async (req, res) => {
+  try {
+    const activeUsers = await User.find({ isOnline: true });
+    res.json(activeUsers);
+  } catch (err) {
+    res.json({ err: err.message });
+  }
+};
+
+const getAllReadyToPlayUsers = async (req, res) => {
+    try {
+      const readyUsers = await User.find({ isOnline: true, isDuringGame: false });
+      res.json(activeUsers);
+    } catch (err) {
+      res.json({ err: err.message });
     }
-  });
+  };
+
+const getTopFiveUsers = async (req, res) => {
+  const usersNum = req.query.num == null ? 5 : req.query.num;
+  try {
+    const topUsers = await User.find().sort("-rank").limit(usersNum);
+    res.json(topUsers);
+  } catch (err) {
+    res.json({ err: err.message });
+  }
 };
 
 // UPDATE
@@ -100,6 +121,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   createUser,
+  getTopFiveUsers,
   getUserById,
   getAllUsers,
   getAllActiveUsers,
