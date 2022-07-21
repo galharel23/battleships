@@ -1,0 +1,4 @@
+###
+// Get All Active Users
+GET  http://localhost:3000/
+Content-Type: application/json

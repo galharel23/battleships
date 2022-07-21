@@ -1,15 +1,17 @@
 const mongoose = require("mongoose");
 const Game = require("../models/game");
+const User = require('../models/user')
+const userCtrl = require ('./user')
 
 // CREATE
 const createGame = async (req, res) => {
-  const player1Id = req.body.player1Id._id;
-  const player2Id = req.body.player2Id._id;
+  const player2Id = req.body.player2Id;
+  const player2 = User.findById(player2Id)
+  console.log(player2)
 
   let game = new Game({
     'players': {
-      player1Id,
-      player2Id,
+        player2Id
     },
   });
   try {

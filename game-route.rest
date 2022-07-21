@@ -1,10 +1,10 @@
 ###
 // Create New Game
-POST http://localhost:3001/game/new 
+POST http://localhost:3001/api/game/new 
 Content-Type: application/json
 Accept: application/json
 
 {
-    "player1Id":"62d691d2b7628ac35ad3f30f",
-    "player2Id":"62d800a9eea29e03315ae92d"
+    "player1Id":"62d8f9b2bea9cf959692f1e4",
+    "player2Id":"62d8f9aabea9cf959692f1e2"
 }

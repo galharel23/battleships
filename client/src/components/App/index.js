@@ -1,6 +1,8 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import logo from "../../logo.svg";
+import "./style.css";
+
+import UsersList from "../UsersList";
 
 function App() {
   const [data, setData] = React.useState(null);
@@ -16,6 +18,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>{!data ? "Loading..." : data}</p>
+        <UsersList/>
       </header>
     </div>
   );

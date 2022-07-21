@@ -8,6 +8,7 @@ const User = require("../models/user");
 const createUser = async (req, res) => {
   const rank = req.body.rank == null ? 100 : req.body.rank;
   let user = new User({
+    _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
     rank: rank,
   });

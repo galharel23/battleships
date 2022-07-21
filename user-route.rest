@@ -20,12 +20,12 @@ Content-Type: application/json
 
 ###
 // Create New User
-POST http://localhost:3001/user/new 
+POST http://localhost:3001/api/user/new 
 Content-Type: application/json
 Accept: application/json
 
 {
-    "name":"Lola2"
+    "name":"Lola1"
 }
 
 ###

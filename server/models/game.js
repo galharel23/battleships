@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 const gameSchema = new Schema({
    players:{
-    type: [Schema.Types.ObjectId],
+    type: Schema.Types.ObjectId,
     ref: 'User',
-    default: [],
-    required: true,
-    validate:[arrayLimit, 'More than 2 players in game']
+   //  default: [],
+   //  required: true,
+   //  validate:[arrayLimit, 'More than 2 players in game']
    },
    hasEnded:{
       type: Boolean,

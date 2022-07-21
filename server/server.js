@@ -29,10 +29,10 @@ app.use(morgan("tiny"));
 app.use(express.json());
 
 // using app routes
-app.use("/game", gameRoutes);
-app.use("/user", userRoutes);
+app.use("/api/game", gameRoutes);
+app.use("/api/user", userRoutes);
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
