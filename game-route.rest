@@ -5,6 +5,5 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "player1Id":"62d8f9b2bea9cf959692f1e4",
     "player2Id":"62d8f9aabea9cf959692f1e2"
 }
