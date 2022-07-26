@@ -3,6 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from '../src/components/App';
 import reportWebVitals from './reportWebVitals';
+const Pusher = require("pusher");
+
+Pusher.logToConsole = true;
+var pusher = new Pusher('d43b343d3e24a760e4be', {
+      cluster: 'ap2',
+    });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

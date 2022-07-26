@@ -17,12 +17,26 @@ const gameRoutes = require("./routes/game");
 const User = require("./models/user");
 const Game = require("./models/game");
 const { MongoRuntimeError } = require("mongodb");
+const bodyParser = require("body-parser");
 
 const app = express();
 const store = new MongoDBSession({
   uri: process.env.MONGO_URL,
   collection: "users",
 });
+
+const Pusher = require("pusher");
+const pusher = new Pusher({
+  appId: "1442546",
+  key: "d43b343d3e24a760e4be",
+  secret: "88dda8eeda12fe9481d2",
+  cluster: "ap2",
+  useTLS: true
+});
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 
 app.use(express.static("public"));
 app.use(morgan("tiny"));

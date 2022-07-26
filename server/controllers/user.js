@@ -4,6 +4,8 @@ const { rawListeners } = require("../models/user");
 const user = require("../models/user");
 const User = require("../models/user");
 
+//trigger  a event in a channel with json object
+
 // CREATE
 const createUser = async (req, res) => {
   const rank = req.body.rank == null ? 100 : req.body.rank;
@@ -16,6 +18,10 @@ const createUser = async (req, res) => {
     const newUser = await user.save();
     res.status(201).json(newUser);
     console.log("create new user");
+
+    pusher.trigger('channel-name', 'event-name', {
+        data: newUser
+    });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -122,6 +128,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   createUser,
+  getAllReadyToPlayUsers, 
   getTopFiveUsers,
   getUserById,
   getAllUsers,
